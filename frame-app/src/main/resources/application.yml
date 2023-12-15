@@ -1,0 +1,63 @@
+spring:
+  profiles:
+    active: ${active:dev}
+  datasource:
+    url: jdbc:mysql://localhost:3306/${DB_DATABASE:data_base_here}?characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:root}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      initial-size: 20
+      min-idle: 20
+      max-active: 60000
+      max-wait: 60000
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        login-username: admin
+        login-password: admin
+      filter:
+        stat:
+          enabled: true
+          log-slow-sql: true
+          slow-sql-millis: 2000
+        wall:
+          enabled: true
+  task:
+    execution:
+      pool:
+        core-size: 20
+        max-size: 100
+        keep-alive: 60s
+        queue-capacity: 500
+      thread-name-prefix: executor-
+  quartz:
+    job-store-type: ${JOB_STORE_MODE:memory}
+    jdbc:
+      initialize-schema: ${JOB_INIT_SCHEMA:never}
+  sql:
+    init:
+      mode: ${SQL_MODE:never}
+      schema-locations: classpath*:/sql/*.sql
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  configuration:
+    map-underscore-to-camel-case: true
+  type-aliases-package: ${parent.groupId}.infrastructure.pojo
+server:
+  cookie-name: ${COOKIE_NAME:token}
+  remember-me-hash-key: ${COOKIE_HASH:cs.jou}
+  always-remember-me: ${REMEMBER_ME:false}
+  port: ${SERVER_PORT:80}
+doc-info:
+  title: web app API文档
+  description:
+  version: v1.0.1
+  website-name: API文档
+  website-url:
+sql:
+  beauty: true

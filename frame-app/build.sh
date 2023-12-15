@@ -1,0 +1,1 @@
+docker build -t frame:1.0 -f ./Dockerfile .

@@ -26,8 +26,7 @@ public class CurrentUser {
     public static CurrentUser anonymous() {
         CurrentUser user = new CurrentUser();
 
-        user.setId(0);
-        user.setName("anonymous");
+        user.setId(0).setName("anonymous");
 
         return user;
     }
@@ -43,11 +42,7 @@ public class CurrentUser {
     public static CurrentUser authorized(Integer id, String name, String ip, Object payload) {
         CurrentUser user = new CurrentUser();
 
-        user.setId(id);
-        user.setName(name);
-        user.setAuthenticated(true);
-        user.setIp(ip);
-        user.setPayload(payload);
+        user.setId(id).setName(name).setAuthenticated(true).setIp(ip).setPayload(payload);
 
         return user;
     }

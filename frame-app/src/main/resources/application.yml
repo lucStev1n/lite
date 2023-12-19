@@ -61,3 +61,29 @@ doc-info:
   website-url:
 sql:
   beauty: true
+
+resilience4j:
+  retry: # 重试
+    instances:
+      retryApi:
+        max-attempts: 5 # 操作失败最大尝试次数
+        wait-duration: 1s #每次重试等待间隔
+
+  circuitbreaker: # 熔断
+    instances:
+      circuitBreakerApi:
+        register-health-indicator: true #断路器状态注册为健康检查指标
+        sliding-window-size: 10 #计算失败率的滑动窗口
+        permitted-number-of-calls-in-half-open-state: 3 #断路器半开时，允许的最大调用次数
+        sliding-window-type: time_based #滑动窗口基于时间
+        minimum-number-of-calls: 5 #断路器开始计算失败率之前，至少需要有的调用次数
+        wait-duration-in-open-state: 5s #断路器打开后，等待5s进入半开状态
+        failure-rate-threshold: 20 #失败率达到20%时，断路器打开阻止调用
+        event-consumer-buffer-size: 10 #存储断路器相关事件缓冲区大小
+
+  ratelimiter: # 限流
+    instances:
+      flowLimitApi:
+        limit-for-period: 1 #一个特定时间周期内，允许的最大请求数
+        limit-refresh-period: 1s #这个时间周期长度是1s，1s会重置请求计数
+        timeout-duration: 100ms #请求超过限制时，客户端会立即收到超时响应，而不等待处理

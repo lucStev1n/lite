@@ -1,10 +1,12 @@
 package cs.jou.trigger.http.limit;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Data
+@NoArgsConstructor
 public class LimitMeta {
     private String ip;
     private AtomicInteger count;

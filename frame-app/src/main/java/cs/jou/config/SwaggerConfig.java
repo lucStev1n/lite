@@ -20,12 +20,12 @@ public class SwaggerConfig {
         return new OpenAPI().info(new Info().title(docInfo.getTitle())
                                             .description(docInfo.getDescription())
                                             .version(docInfo.getVersion()))
-                            .externalDocs(new ExternalDocumentation().description(docInfo.getWebsiteName())
+                            .externalDocs(new ExternalDocumentation().description(docInfo.getDescription())
                                                                      .url(docInfo.getWebsiteUrl()));
     }
 
     @Bean
     public GroupedOpenApi publicApi() {
-        return GroupedOpenApi.builder().group(docInfo.getTitle()).pathsToMatch("/**").build();
+        return GroupedOpenApi.builder().group(docInfo.getDescription()).pathsToMatch("/**").build();
     }
 }

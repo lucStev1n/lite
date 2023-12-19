@@ -26,16 +26,16 @@ public class RequestLimitHandler implements HandlerInterceptor {
     private final WebContext context;
 
     private final Cache<String, LimitMeta> block = Caffeine.newBuilder()
-                                                     .expireAfterWrite(60, TimeUnit.SECONDS)
-                                                     .initialCapacity(100)
-                                                     .maximumSize(1000)
-                                                     .build();
+                                                           .expireAfterWrite(60, TimeUnit.SECONDS)
+                                                           .initialCapacity(100)
+                                                           .maximumSize(1000)
+                                                           .build();
 
     private final Cache<String, LimitMeta> count = Caffeine.newBuilder()
-                                                     .expireAfterWrite(10, TimeUnit.SECONDS)
-                                                     .initialCapacity(100)
-                                                     .maximumSize(1000)
-                                                     .build();
+                                                           .expireAfterWrite(10, TimeUnit.SECONDS)
+                                                           .initialCapacity(100)
+                                                           .maximumSize(1000)
+                                                           .build();
 
     @Override
     public synchronized boolean preHandle(@NonNull HttpServletRequest request,
@@ -56,6 +56,7 @@ public class RequestLimitHandler implements HandlerInterceptor {
                 }
 
                 int second = LocalDateTime.now().get(ChronoField.SECOND_OF_DAY);
+
                 LimitMeta meta = this.count.get(key, k -> new LimitMeta(ServletUtils.ip(), 1, second));
                 if (Math.abs(meta.getSecond() - second) >= 1) {
                     meta = new LimitMeta(ServletUtils.ip(), 1, second);

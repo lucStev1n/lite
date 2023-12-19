@@ -38,7 +38,7 @@ public class SecurityConfig {
 
     @Bean
     RememberMeServices rememberMeServices(UserDetailsService userDetailsService, ApplicationProperties properties) {
-        FrameRememberMeService rememberMeService = new FrameRememberMeService(properties.getRememberMeHashKey(),
+        FrameRememberMeService rememberMeService = new FrameRememberMeService(properties.getRememberMeParam(),
                                                                               userDetailsService);
 
         rememberMeService.key(properties.getRememberMeHashKey()).setCookieName(properties.getCookieName());
